@@ -1,0 +1,6 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: start; /* Alinea a la izquierda */
+    gap: 10px;
+}

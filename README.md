@@ -44,10 +44,15 @@
     ```
     src/main/resources/static
     ```
+    ![imagen](https://github.com/user-attachments/assets/0701a359-a4c2-402e-bb14-daf0cffae4c1)
+
 
 4. Cree, en el directorio anterior, la página index.html, sólo con lo básico: título, campo para la captura del autor, botón de 'Get blueprints', campo <div> donde se mostrará el nombre del autor seleccionado, [la tabla HTML](https://www.w3schools.com/html/html_tables.asp) donde se mostrará el listado de planos (con sólo los encabezados), y un campo <div> donde se mostrará el total de puntos de los planos del autor. Recuerde asociarle identificadores a dichos componentes para facilitar su búsqueda mediante selectores.
 
-5. En el elemento \<head\> de la página, agregue las referencia a las librerías de jQuery, Bootstrap y a la hoja de estilos de Bootstrap. 
+   ![imagen](https://github.com/user-attachments/assets/1010b249-7ea3-421f-9c93-eeff4bb6842c)
+
+
+6. En el elemento \<head\> de la página, agregue las referencia a las librerías de jQuery, Bootstrap y a la hoja de estilos de Bootstrap. 
     ```html
     <head>
         <title>Blueprints</title>
@@ -61,12 +66,18 @@
     </head>
     ```
 
+![imagen](https://github.com/user-attachments/assets/63240a6a-e215-40d1-9482-100cd0b948ef)
+
+
 
 5. Suba la aplicación (mvn spring-boot:run), y rectifique:
     1. Que la página sea accesible desde:
     ```
     http://localhost:8080/index.html
     ```
+![imagen](https://github.com/user-attachments/assets/f803668e-dfc9-466b-9ade-7b4ef5daa0b2)
+
+    
     2. Al abrir la consola de desarrollador del navegador, NO deben aparecer mensajes de error 404 (es decir, que las librerías de JavaScript se cargaron correctamente).
 
 ## Front-End - Lógica

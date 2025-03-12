@@ -17,25 +17,8 @@
 1. Trabaje sobre la base del proyecto anterior (en el que se hizo el API REST).
 2. Incluya dentro de las dependencias de Maven los 'webjars' de jQuery y Bootstrap (esto permite tener localmente dichas librerías de JavaScript al momento de construír el proyecto):
 
-    ```xml
-    <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>webjars-locator</artifactId>
-    </dependency>
+![imagen](https://github.com/user-attachments/assets/c92141b7-3ff2-4e79-8c28-e0293a329f36)
 
-    <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>bootstrap</artifactId>
-        <version>3.3.7</version>
-    </dependency>
-
-    <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>jquery</artifactId>
-        <version>3.1.0</version>
-    </dependency>                
-
-    ```
 
 ## Front-End - Vistas
 

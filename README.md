@@ -24,9 +24,6 @@
 
 1. Cree el directorio donde residirá la aplicación JavaScript. Como se está usando SpringBoot, la ruta para poner en el mismo contenido estático (páginas Web estáticas, aplicaciones HTML5/JS, etc) es:  
 
-    ```
-    src/main/resources/static
-    ```
     ![imagen](https://github.com/user-attachments/assets/0701a359-a4c2-402e-bb14-daf0cffae4c1)
 
 
@@ -36,18 +33,6 @@
 
 
 6. En el elemento \<head\> de la página, agregue las referencia a las librerías de jQuery, Bootstrap y a la hoja de estilos de Bootstrap. 
-    ```html
-    <head>
-        <title>Blueprints</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <script src="/webjars/jquery/jquery.min.js"></script>
-        <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet"
-          href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-    </head>
-    ```
 
 ![imagen](https://github.com/user-attachments/assets/63240a6a-e215-40d1-9482-100cd0b948ef)
 
@@ -55,9 +40,7 @@
 
 5. Suba la aplicación (mvn spring-boot:run), y rectifique:
     1. Que la página sea accesible desde:
-    ```
-    http://localhost:8080/index.html
-    ```
+
 ![imagen](https://github.com/user-attachments/assets/f803668e-dfc9-466b-9ade-7b4ef5daa0b2)
 
     

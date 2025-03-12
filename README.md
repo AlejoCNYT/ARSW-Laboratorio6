@@ -39,11 +39,10 @@
 
 
 5. Suba la aplicación (mvn spring-boot:run), y rectifique:
-    1. Que la página sea accesible desde:
+    1. Que la página sea accesible desde el anlace (ver imagen).
+    2. Al abrir la consola de desarrollador del navegador, NO deben aparecer mensajes de error 404 (es decir, que las librerías de JavaScript se cargaron correctamente).
 
 ![imagen](https://github.com/user-attachments/assets/f803668e-dfc9-466b-9ade-7b4ef5daa0b2)
-
-    2. Al abrir la consola de desarrollador del navegador, NO deben aparecer mensajes de error 404 (es decir, que las librerías de JavaScript se cargaron correctamente).
 
 ## Front-End - Lógica
 

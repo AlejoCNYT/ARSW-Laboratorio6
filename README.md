@@ -43,7 +43,6 @@
 
 ![imagen](https://github.com/user-attachments/assets/f803668e-dfc9-466b-9ade-7b4ef5daa0b2)
 
-    
     2. Al abrir la consola de desarrollador del navegador, NO deben aparecer mensajes de error 404 (es decir, que las librerías de JavaScript se cargaron correctamente).
 
 ## Front-End - Lógica

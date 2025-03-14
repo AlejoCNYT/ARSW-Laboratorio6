@@ -1,109 +1,70 @@
 var App = (function () {
-    // Variables privadas (estado)
-    var blueprints = [];
-    var author = "";
+    let api = apimock; // Usamos el mock API
+    let currentAuthor = "";
 
-    // Función privada para actualizar la tabla con los planos del autor
-    function updateBlueprintsTable() {
-        let tableBody = $("#blueprintsTable tbody");
-        tableBody.empty(); // Limpiar la tabla antes de actualizar
-
-        let totalPoints = blueprints.reduce((sum, bp) => sum + bp.points.length, 0);
-
-        blueprints.forEach(function (bp) {
-            let row = `<tr>
-                <td>${bp.name}</td>
-                <td>${bp.points.length}</td>
-            </tr>`;
-            tableBody.append(row);
-        });
-
-        // Actualizar el total de puntos en la UI
-        $("#totalUserPoints").text("Total user points: " + totalPoints);
+    function setAuthor(author) {
+        currentAuthor = author;
     }
 
-    // Métodos públicos expuestos
+    function updateBlueprintsList(author) {
+        api.getBlueprintsByAuthor(author, function (blueprints) {
+            let transformedData = blueprints.map(bp => ({
+                name: bp.name,
+                points: bp.points.length
+            }));
+
+            let totalPoints = transformedData.reduce((sum, bp) => sum + bp.points, 0);
+
+            $("#blueprintsTable tbody").empty(); // Limpiar la tabla
+            transformedData.forEach(bp => {
+                $("#blueprintsTable tbody").append(
+                    `<tr>
+                        <td>${bp.name}</td>
+                        <td>${bp.points}</td>
+                        <td>
+                            <button class="btn btn-info draw-btn" data-name="${bp.name}">Draw</button>
+                        </td>
+                    </tr>`
+                );
+            });
+
+            $("#totalUserPoints").text(`Total user points: ${totalPoints}`);
+
+            // Asociar evento click a los botones "Draw"
+            $(".draw-btn").click(function () {
+                let blueprintName = $(this).data("name");
+                drawBlueprint(author, blueprintName);
+            });
+        });
+    }
+
+    function drawBlueprint(author, blueprintName) {
+        api.getBlueprintsByNameAndAuthor(author, blueprintName, function (blueprint) {
+            let canvas = document.getElementById("blueprintCanvas");
+            let ctx = canvas.getContext("2d");
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
+            ctx.beginPath();
+            if (blueprint.points.length > 0) {
+                ctx.moveTo(blueprint.points[0].x, blueprint.points[0].y);
+                for (let i = 1; i < blueprint.points.length; i++) {
+                    ctx.lineTo(blueprint.points[i].x, blueprint.points[i].y);
+                }
+                ctx.stroke();
+            }
+
+            // Actualizar el título del plano seleccionado
+            if ($("#selectedBlueprint").length === 0) {
+                $("#blueprintCanvas").after(`<h3 id="selectedBlueprint">Drawing: ${blueprintName}</h3>`);
+            } else {
+                $("#selectedBlueprint").text(`Drawing: ${blueprintName}`);
+            }
+        });
+    }
+
     return {
-        setAuthor: function (newAuthor) {
-            console.log("Setting author to:", newAuthor);
-            author = newAuthor;
-        },
-
-        getBlueprints: function () {
-            if (!author) {
-                console.error("No author specified");
-                return;
-            }
-
-            apimock.getBlueprintsByAuthor(author, function (data) {
-                if (!data || data.length === 0) {
-                    console.warn("No blueprints found for author:", author);
-                    return;
-                }
-                blueprints = data; // Guardar los planos obtenidos
-                console.log("Planos obtenidos:", blueprints);
-                updateBlueprintsTable();
-            });
-        },
-
-        openBlueprint: function (name) {
-            let blueprint = blueprints.find(bp => bp.name === name);
-            if (!blueprint) {
-                console.error("Blueprint not found:", name);
-                return;
-            }
-
-            console.log("Opening blueprint:", blueprint);
-            // Aquí podrías agregar código para dibujar el blueprint en un canvas
-        },
-
-        updateBlueprints: function (authorName) {
-            if (!authorName) {
-                console.error("No author name provided for updateBlueprints");
-                return;
-            }
-
-            apimock.getBlueprintsByAuthor(authorName, function (data) {
-                if (!data || data.length === 0) {
-                    console.warn("No blueprints found for author:", authorName);
-                    return;
-                }
-
-                // 1️⃣ Transformar los datos (sólo nombre y cantidad de puntos)
-                let transformedBlueprints = data.map(bp => ({
-                    name: bp.name,
-                    pointsCount: bp.points.length
-                }));
-
-                // 2️⃣ Limpiar la tabla y agregar nuevas filas con jQuery
-                let tableBody = $("#blueprintsTable tbody");
-                tableBody.empty();
-
-                transformedBlueprints.forEach(bp => {
-                    tableBody.append(`<tr><td>${bp.name}</td><td>${bp.pointsCount}</td></tr>`);
-                });
-
-                // 3️⃣ Calcular total de puntos con reduce y actualizar el DOM
-                let totalPoints = transformedBlueprints.reduce((sum, bp) => sum + bp.pointsCount, 0);
-                $("#totalUserPoints").text("Total user points: " + totalPoints);
-            });
-        }
+        setAuthor: setAuthor,
+        updateBlueprintsList: updateBlueprintsList,
+        drawBlueprint: drawBlueprint
     };
 })();
-
-// Esperar a que el DOM cargue completamente antes de asignar eventos
-$(document).ready(function () {
-    // Asocia la función `updateBlueprints` al botón de consulta
-    $("#getBlueprintsButton").on("click", function () {
-        let authorInput = $("#authorInput").val().trim(); // Obtener el valor del input
-
-        if (!authorInput) {
-            alert("Please enter an author name."); // Validar entrada vacía
-            return;
-        }
-
-        App.setAuthor(authorInput);      // Establecer el autor en la app
-        App.updateBlueprints(authorInput); // Actualizar planos para ese autor
-    });
-});
-

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <title>Blueprints</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- jQuery (solo una vez) -->
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap 5 -->
@@ -14,7 +14,10 @@
 
     <!-- Scripts de la aplicación -->
     <script src="js/apimock.js"></script>
+    <!-- Scripts de la aplicación -->
+    <script src="js/apiclient.js"></script>  <!-- Se reemplaza apimock.js -->
     <script src="js/app.js"></script>
+
 
 </head>
 <body class="bg-light">
@@ -45,7 +48,26 @@
     </table>
 
     <h3 id="totalUserPoints" class="mt-3">Total user points: 0</h3>
+
+    <!-- ✅ Canvas correctamente ubicado -->
+    <canvas id="blueprintCanvas" width="500" height="400" style="border:1px solid #000; margin-top: 20px;"></canvas>
+
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#getBlueprintsButton").click(function () {
+            let author = $("#authorInput").val().trim();
+            if (author) {
+                App.setAuthor(author);
+                App.updateBlueprintsList(author);
+                $("#authorName").text(author); // ✅ Actualiza el nombre del autor en la página
+            } else {
+                alert("Please enter an author name.");
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
